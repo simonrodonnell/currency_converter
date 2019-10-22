@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Currency Converter</title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <script src="./js/bundle.js"></script>
+</head>
+<body>
+  <div id="app">
+
+    <!-- CONVERT EUROS TO OTHER -->
+    <form v-on:submit.prevent="convertEurosToOther">
+      <label>Amount in Euros:</label>
+      <input type="number" name="" v-model.number="searchAmountInEuros">
+      <label for="currency-select">Select a currency:</label>
+      <select id="currency-select" v-model="selectedCurrency">
+        <option disabled value="">Select a currency</option>
+        <option v-if="exchangeRates" v-for="(rate, currency) in exchangeRates" :value="rate">{{currency}}</option>
+      </select>
+      <input type="submit" value="Calculate Amount">
+    </form>
+
+    <h4 v-if="resultConvertEurosToOther">{{resultConvertEurosToOther}}</h4>
+
+    <!-- CONVERT OTHER TO EUROS -->
+    <form  v-on:submit.prevent="convertOtherToEuros">
+      <label>Amount in Other Currency</label>
+      <input type="number" name="" v-model.number="searchAmountInOther">
+      <label for="currency-select">Select a currency:</label>
+      <select id="currency-select" v-model="selectedCurrency">
+        <option disabled value="">Select a currency</option>
+        <option v-if="exchangeRates" v-for="(rate, currency) in exchangeRates" :value="rate">{{currency}}</option>
+      </select>
+      <input type="submit" value="Calculate Amount">
+    </form>
+
+    <h4 v-if="resultConvertOtherToEuros">{{resultConvertOtherToEuros}}</h4>
+
+  </div>
+</body>
+</html>
