@@ -1,0 +1,30 @@
+body {
+  text-align: center;
+  background-color: dodgerblue;
+}
+
+.convert-euros {
+  width: 70%;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: grey;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.convert-other {
+  width: 70%;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: grey;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.selector {
+  padding: 5px;
+}
+
+form {
+  padding: 5px;
+}

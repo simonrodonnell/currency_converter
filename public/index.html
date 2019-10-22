@@ -8,34 +8,66 @@
 </head>
 <body>
   <div id="app">
+    <h1>Currency Converter</h1>
 
-    <!-- CONVERT EUROS TO OTHER -->
-    <form v-on:submit.prevent="convertEurosToOther">
-      <label>Amount in Euros:</label>
-      <input type="number" name="" v-model.number="searchAmountInEuros">
-      <label for="currency-select">Select a currency:</label>
-      <select id="currency-select" v-model="selectedCurrency">
-        <option disabled value="">Select a currency</option>
-        <option v-if="exchangeRates" v-for="(rate, currency) in exchangeRates" :value="rate">{{currency}}</option>
-      </select>
-      <input type="submit" value="Calculate Amount">
-    </form>
+    <!-- ### MVP ### -->
+    <div class="convert-euros">
+      <!-- SELECT CURRENCY -->
+      <div class="selector">
+        <label for="currency-select">Select currency:</label>
+        <select id="currency-select" v-model="selectedCurrency">
+          <option disabled value="">Select a currency</option>
+          <option v-if="exchangeRates" v-for="(rate, currency) in exchangeRates" :value="(currency)">{{currency}}</option>
+        </select>
+      </div>
 
-    <h4 v-if="resultConvertEurosToOther">{{resultConvertEurosToOther}}</h4>
+      <!-- CONVERT EUROS TO OTHER -->
+      <form v-if="selectedCurrency" v-on:submit.prevent="convertEurosToOther">
+        <label>Convert EUR to {{selectedCurrency}}:</label>
+        <input type="number" name="" v-model.number="searchAmountInEuros">
+        <input type="submit" value="Calculate Amount">
+      </form>
 
-    <!-- CONVERT OTHER TO EUROS -->
-    <form  v-on:submit.prevent="convertOtherToEuros">
-      <label>Amount in Other Currency</label>
-      <input type="number" name="" v-model.number="searchAmountInOther">
-      <label for="currency-select">Select a currency:</label>
-      <select id="currency-select" v-model="selectedCurrency">
-        <option disabled value="">Select a currency</option>
-        <option v-if="exchangeRates" v-for="(rate, currency) in exchangeRates" :value="rate">{{currency}}</option>
-      </select>
-      <input type="submit" value="Calculate Amount">
-    </form>
+      <!-- CONVERT OTHER TO EUROS -->
+      <form   v-if="selectedCurrency" v-on:submit.prevent="convertOtherToEuros">
+        <label>Convert {{selectedCurrency}} to EUR:</label>
+        <input type="number" name="" v-model.number="searchAmountInOther">
+        <input type="submit" value="Calculate Amount">
+      </form>
 
-    <h4 v-if="resultConvertOtherToEuros">{{resultConvertOtherToEuros}}</h4>
+      <h4 v-if="resultConvertEurosToOther">{{ searchAmountInEuros }} EUR in {{ selectedCurrency }} = {{resultConvertEurosToOther}}</h4>
+
+      <h4 v-if="resultConvertOtherToEuros">{{ searchAmountInOther }} {{selectedCurrency}} in EUR = {{resultConvertOtherToEuros}}</h4>
+    </div>
+
+    <!-- ### EXTENSIONS ### -->
+    <div class="convert-other">
+      <!-- CONVERT CURRENCY1 TO CURRENCY2 -->
+      <div class="selector">
+
+        <label for="currency1-select">Select 1st currency:</label>
+        <select id="currency1-select" v-model="selectedFirstCurrency">
+          <option disabled value="">Select a currency</option>
+          <option v-if="exchangeRates" v-for="(rate, currency) in exchangeRates" :value="(currency)">{{currency}}</option>
+        </select>
+        <label for="currency2-select">Select 2nd currency:</label>
+        <select id="currency2-select" v-model="selectedSecondCurrency">
+          <option disabled value="">Select a currency</option>
+          <option v-if="exchangeRates" v-for="(rate, currency) in exchangeRates" :value="(currency)">{{currency}}</option>
+        </select>
+      </div>
+
+      <form   v-if="selectedFirstCurrency" v-on:submit.prevent="convertOtherToOthers">
+        <label>Convert {{selectedFirstCurrency}} to {{selectedSecondCurrency}}:</label>
+        <input type="number" name="" v-model.number="searchAmountOtherToOther">
+        <input type="submit" value="Calculate Amount">
+      </form>
+
+
+      <h4 v-if="resultConvertOtherToOther">{{ searchAmountOtherToOther }} {{selectedFirstCurrency}} in {{selectedSecondCurrency}} = {{resultConvertOtherToOther}}</h4>
+    </div>
+
+
 
   </div>
 </body>

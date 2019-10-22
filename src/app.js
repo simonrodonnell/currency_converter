@@ -9,7 +9,22 @@ document.addEventListener('DOMContentLoaded', () => {
       resultConvertEurosToOther: null,
       searchAmountInOther: null,
       resultConvertOtherToEuros: null,
-      selectedCurrency: null
+      selectedCurrency: null,
+      selectedFirstCurrency: null,
+      selectedSecondCurrency: null,
+      searchAmountOtherToOther: null,
+      resultConvertOtherToOther: null
+    },
+    computed: {
+      selectedRate: function(){
+        return this.exchangeRates[this.selectedCurrency]
+      },
+      selectedFirstRate: function(){
+        return this.exchangeRates[this.selectedFirstCurrency]
+      },
+      selectedSecondRate: function(){
+        return this.exchangeRates[this.selectedSecondCurrency]
+      }
     },
     mounted(){
       this.fetchExchangeRates();
@@ -19,20 +34,19 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch("https://api.exchangeratesapi.io/latest")
         .then(response => response.json())
         .then(data => this.exchangeRates = data.rates)
-        console.log(this.exchangeRates)
       },
       convertEurosToOther: function(){
-        this.resultConvertEurosToOther = this.searchAmountInEuros * this.selectedCurrency;
-        console.log("search amount:", this.searchAmountInEuros)
-        console.log("currency:", this.selectedCurrency)
-        console.log("result:", this.resultConvertEurosToOther)
-        this.searchAmountInEuros = null;
-        this.selectedCurrency = null;
+        this.resultConvertEurosToOther = (this.searchAmountInEuros * this.selectedRate).toFixed(2);
       },
       convertOtherToEuros: function(){
-        this.resultConvertOtherToEuros = this.searchAmountInOther / this.selectedCurrency;
-        this.searchAmountInOther = null;
-        this.selectedCurrency = null;
+        this.resultConvertOtherToEuros = (this.searchAmountInOther / this.selectedRate).toFixed(2);
+      },
+      convertOtherToOthers: function(){
+        const convertToEuros =
+         (this.searchAmountOtherToOther / this.selectedFirstRate);
+         console.log(convertToEuros)
+         this.resultConvertOtherToOther = (convertToEuros * this.selectedSecondRate).toFixed(2);
+         return this.resultConvertOtherToOther;
       }
     }
   })
