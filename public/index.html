@@ -57,7 +57,7 @@
         </select>
       </div>
 
-      <form   v-if="selectedFirstCurrency" v-on:submit.prevent="convertOtherToOthers">
+      <form   v-if="selectedFirstCurrency && selectedSecondCurrency" v-on:submit.prevent="convertOtherToOthers">
         <label>Convert {{selectedFirstCurrency}} to {{selectedSecondCurrency}}:</label>
         <input type="number" name="" v-model.number="searchAmountOtherToOther">
         <input type="submit" value="Calculate Amount">
